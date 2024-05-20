@@ -22,56 +22,47 @@ class Discord:
     global locked
     global st
     def __init__(self) -> None:
+        self.data = configuration
+        self.proxy = random.choice(loaded_proxies)
+
         self.ua_version = ua_version
         self.ua = ua
         self.sec_ch_ua = sec_ch_ua
+
         self.session = tls_client.Session(client_identifier=f"chrome_{self.ua_version}", random_tls_extension_order=True)
+        self.session.proxies = {
+            'https': "http://{}".format(self.proxy),
+            'http': "http://{}".format(self.proxy)
+        }
         self.ws = WebSocket()
-        self.data = configuration
+
         self.bios = loaded_bios if self.data['bio'] else []
-        self.proxy = random.choice(loaded_proxies)
-        self.x_sup = x_sup
-        self.lock = threading_lock
         self.cap_key = self.data['captcha_api_key']
-        self.build_num = build_num
         self.toggle_errors = self.data['show_errors']
-        self.ve = False
+        
+        self.lock = threading_lock
         self.capabilities = 16381
+        self.build_num = build_num
+        self.x_sup = x_sup
 
         self.rl = "The resource is being rate limited."
         self.locked = "You need to verify your account in order to perform this action"
         self.captcha_detected = "captcha-required"
 
-
-        self.use_hotmailbox = False
         
         if self.data['random_username']:
             self.username = "".join(random.choice(string.ascii_letters) for x in range(random.randint(6, 8)))
         else:
             self.username = random.choice(loaded_usernames)
 
-        if self.data['verify_email'] and self.data['email_api_key'] != "" and len(self.data['kopeechka_domains']) > 0:
-            self.email_domain = random.choice(self.data['kopeechka_domains'])
-            self.email, self.id = self.buy_email()
-            self.ve = True
-            if self.data['random_username']:
-                self.username = self.email.split("@")[0] + "".join(random.choice(string.ascii_letters) for x in range(random.randint(6, 8)))
-            else:
-                pass
-        else:
-            self.email = "".join(random.choice(string.ascii_letters) for x in range(random.randint(6, 8)))
-            self.email += str("".join(str(random.randint(1, 9) if random.randint(1, 2) == 1 else random.choice(string.ascii_letters)) for x in range(int(random.randint(6, 8)))))
-            self.email += random.choice(["@gmail.com", "@outlook.com"])
+
+        self.email = "".join(random.choice(string.ascii_letters) for x in range(random.randint(6, 8)))
+        self.email += str("".join(str(random.randint(1, 9) if random.randint(1, 2) == 1 else random.choice(string.ascii_letters)) for x in range(int(random.randint(6, 8)))))
+        self.email += random.choice(["@gmail.com", "@outlook.com"])
         if self.data['password'] == "":
             self.password = "".join(random.choice(string.digits) if random.randint(1, 2) == 1 else random.choice(string.ascii_letters) for x in range(random.randint(8, 24))) + "".join("" if random.randint(1, 2) == 1 else random.choice(["@", "$", "%", "*", "&", "^"]) for x in range(1, 6))
-        else:
-            self.password = self.data['password']
+        else:   self.password = self.data['password']
 
-        self.session.proxies = {
-            'https': "http://{}".format(self.proxy),
-            'http': "http://{}".format(self.proxy)
-        }
-    
     @staticmethod
     def display_stats():
         while True:
@@ -105,7 +96,7 @@ class Discord:
         try:
             self.session.cookies = self.session.get(url).cookies
         except Exception:
-            Log.bad('Unexpected error Fetching Cookies')
+            Log.bad('Error Fetching Cookies')
             return Discord().begin()
         return
     
@@ -247,17 +238,9 @@ class Discord:
             r = self.session.post(url, json=payload)
             self.token = r.json()['token']
         except Exception:
-            try:
-                if self.rl in str(r.text):
-                    Log.bad("IP Ratelimit (Registration)", "X")
-                    return Discord().begin()
-            except tls_client.sessions.TLSClientExeption:
-                Log.bad("TLS Proxy Timeout Error", "X")
-                return Discord().begin()
-            except:
-                pass
             Log.bad("Error Creating Account!")
             return Discord().begin()
+        
         self.session.headers = {
             'authority': 'discord.com',
             'accept': '*/*',
@@ -281,26 +264,6 @@ class Discord:
         self.ConnectWS()
         res = self.check_token()
         if res:
-            self.session.headers = {
-                'authority': 'discord.com',
-                'accept': '*/*',
-                'accept-language': 'en-US,en;q=0.9',
-                'authorization': self.token,
-                'content-type': 'application/json',
-                'origin': 'https://discord.com',
-                'referer': 'https://discord.com/channels/@me',
-                'sec-ch-ua': self.sec_ch_ua,
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'same-origin',
-                'user-agent': self.ua,
-                'x-debug-options': 'bugReporterEnabled',
-                'x-discord-locale': 'en-US',
-                'x-discord-timezone': 'America/New_York',
-                'x-super-properties': self.x_sup,
-            }
             if True: # changed
                 with open("./output/tokens.txt", 'a+') as f:
                     self.lock.acquire(blocking=True)
