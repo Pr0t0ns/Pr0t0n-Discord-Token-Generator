@@ -1,13 +1,17 @@
 {
     "license": "PqRqny-lN8xHU-i87Sy2-r57HjJ-6inB4r-etXyTg",
-    "captcha_service": "fcaptcha",
-    "email_service": "",
+
     "captcha_api_key": "discord.gg/fcaptcha",
+    "captcha_service": "fcaptcha",
+    
     "email_api_key": "",
+    "email_service": "",
     "kopeechka_domains": ["outlook.com"],
+
+    "5sim_key": "",
     "5sim_countries": ["England"],
     "5sim_operator": ["Virtual38"],
-    "5sim_key": "",
+
     "solve_phone_captcha": true,
     "solve_email_captcha": true,
     "verify_phone": false,

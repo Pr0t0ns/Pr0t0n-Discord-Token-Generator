@@ -10,7 +10,16 @@ import colorama
 
 class Captcha:
     @staticmethod
-    def solve(user_agent: str, api_key:str, proxy: str, service: str='capmonster', site_key: str="4c672d35-0701-42b2-88c3-78380b0db560", rq_data: str=None, max_retries: int=150) -> str|bool:
+    def solve(
+        user_agent: str, 
+        api_key:str, 
+        proxy: str, 
+        service: str='capmonster', 
+        site_key: str="4c672d35-0701-42b2-88c3-78380b0db560", 
+        rq_data: str=None, 
+        max_retries: int=150
+    ) -> str|bool:
+        
         custom = None
         headers = {
             'user-agent': "Mozilla"
@@ -18,33 +27,33 @@ class Captcha:
         if service == "capmonster":
             url = 'https://api.capmonster.cloud'
             payload = {
-                    "clientKey": api_key,
-                    "task":
-                    {
-                        "type":"HCaptchaTaskProxyless",
-                        "websiteURL":"https://discord.com/",
-                        "websiteKey": site_key,
-                        "userAgent": user_agent,
-                    }
+                "clientKey": api_key,
+                "task":
+                {
+                    "type":"HCaptchaTaskProxyless",
+                    "websiteURL":"https://discord.com/",
+                    "websiteKey": site_key,
+                    "userAgent": user_agent,
+                }
             }
         elif service == "capsolver":
             url = "https://api.capsolver.com"
             payload = {
-                    "clientKey": api_key,
-                    "task":
-                    {
-                        "websiteURL":"https://discord.com/",
-                        "websiteKey": site_key,
-                    }
+                "clientKey": api_key,
+                "task":
+                {
+                    "websiteURL":"https://discord.com/",
+                    "websiteKey": site_key,
+                }
             }
-            payload["task"]["type"] = "HCaptchaTurboTask"
-            payload["task"]["proxy"] = proxy
+            payload['task']['type'] = "HCaptchaTurboTask"
+            payload['task']['proxy'] = proxy
             payload['task']['userAgent'] = user_agent
         elif service == "hcoptcha":
             url = "https://api.hcoptcha.online/api"
             payload = {
-            "api_key": api_key, 
-            "task_type": "hcaptchaEnterprise", 
+                "api_key": api_key, 
+                "task_type": "hcaptchaEnterprise", 
                 "data": {
                     "sitekey": site_key,
                     "proxy": proxy,
@@ -98,12 +107,11 @@ class Captcha:
             if custom:
                 r = requests.post(url, headers=headers, json=payload)
             else:
-                r = requests.post(f"{service}/createTask", headers=headers, json=payload)
+                r = requests.post(f"{url}/createTask", headers=headers, json=payload)
         except:
-            Log.bad(f"Error Creating {service} Task")
+            Log.bad(f"Error Creating {service} Task: {r.text}")
             return None
         try:
-            
             if service not in ['hcoptcha', '24captcha', 'fcaptcha']:
                 if r.json().get("taskId"):
                     taskid = r.json()["taskId"]
@@ -129,7 +137,7 @@ class Captcha:
         except:
             Log.bad("Error getting captcha task id")
             return None
-        for i in range(max_retries):
+        for _ in range(max_retries):
             try:
                 if service not in ['hcoptcha', '24captcha', 'fcaptcha']:
                     r = requests.post(f"{url}/getTaskResult",json={"clientKey": api_key,"taskId":taskid})
