@@ -6,10 +6,13 @@ from datetime import datetime
 class Utils:
     @staticmethod
     def fetch_buildnum() -> int: # gotta fix too lazy tho
-            return 294520
+        return 294520
 
     @staticmethod
     def build_x_context_properties(location: str) -> str:
+        """
+        Build X-Context-Properties header
+        """
         return base64.b64encode(json.dumps({"location":location}).replace("'", '"').replace(" ", "").encode()).decode()
 
     @staticmethod
@@ -19,7 +22,10 @@ class Utils:
         return str((int(unixts)*1000-1420070400000)*4194304)
 
     @staticmethod
-    def build_xsup(user_agent: str, ua_version: str, bn: int) -> str:
+    def build_xsp(user_agent: str, ua_version: str, build_number: int) -> str:
+        """
+        Build X-Super-Properties header
+        """
         data = {
             "os": "Windows",
             "browser": "Chrome",
@@ -33,7 +39,7 @@ class Utils:
             "referrer_current": "https://discord.com/",
             "referring_domain_current": "discord.com",
             "release_channel": "stable",
-            "client_build_number": bn,
+            "client_build_number": build_number,
             "client_event_source": None,
             "design_id":0
         }

@@ -1,5 +1,6 @@
 import platform, sys, os, shutil, random
 import colorama
+
 class UI:
     colorama.init(autoreset=True)
     def clear(title: str=None):
@@ -31,12 +32,12 @@ class UI:
                 colorama.Fore.BLUE, colorama.Fore.LIGHTBLUE_EX, colorama.Fore.CYAN, colorama.Fore.LIGHTCYAN_EX,
                 colorama.Fore.LIGHTGREEN_EX, colorama.Fore.GREEN, colorama.Fore.BLACK, colorama.Fore.LIGHTBLACK_EX
             ]
-            for i, line in enumerate(logo_lines):
+            for line in logo_lines:
                 gradient_color = random.choice(colorz)
                 centered_line = line.center(console_width)
                 print(gradient_color + centered_line) 
-            print("")
-            print(f"{colorama.Fore.WHITE}Menu\n")
+
+            print(f"{colorama.Fore.WHITE}\nMenu\n")
             print(f"[{colorama.Fore.BLUE}1{colorama.Fore.RESET}] - Start ")
             print(f"[{colorama.Fore.RED}2{colorama.Fore.RESET}] - Exit")
             choice = input(f"{colorama.Fore.BLUE}|> {colorama.Fore.WHITE}")
