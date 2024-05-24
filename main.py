@@ -5,16 +5,14 @@ import time
 import re
 import threading
 import json
-import os
 import colorama
 import ctypes
-import base64
-import requests
 from websocket   import WebSocket
 from modules.utils import Utils
 from modules.logging import Log
 from modules.captcha import Captcha
 from modules.extra import UI
+
 
 
 class Discord:
@@ -238,6 +236,7 @@ class Discord:
             r = self.session.post(url, json=payload)
             self.token = r.json()['token']
         except Exception:
+            print(r.json())
             Log.bad("Error Creating Account!")
             return Discord().begin()
         
@@ -264,7 +263,7 @@ class Discord:
         self.ConnectWS()
         res = self.check_token()
         if res:
-            if True: # changed
+            if True:
                 with open("./output/tokens.txt", 'a+') as f:
                     self.lock.acquire(blocking=True)
                     f.write(f"{self.email}:{self.password}:{self.token}\n")
@@ -325,7 +324,3 @@ if __name__ == "__main__":
         discord = Discord()
         threading.Thread(target=discord.begin).start()
 
-
-    #if configuration['display_title']:
-    #    Ds = Discord()
-    #    threading.Thread(target=Ds.display_stats).start()

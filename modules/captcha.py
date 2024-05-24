@@ -72,7 +72,7 @@ class Captcha:
                 "user_agent": user_agent
             }
         elif service == "2captcha":
-            url = "https://api.2captcha.com"
+            url = "https://2captcha.com"
             payload = {
                 "clientKey":api_key,
                 "task": {
@@ -98,7 +98,7 @@ class Captcha:
             if custom:
                 r = requests.post(url, headers=headers, json=payload)
             else:
-                r = requests.post(f"{service}/createTask", headers=headers, json=payload)
+                r = requests.post(f"{service}/createTask", json=payload)
         except:
             Log.bad(f"Error Creating {service} Task")
             return None
@@ -118,7 +118,6 @@ class Captcha:
                         Log.bad("Error getting captcha task id")
                         return None                 
                 elif service == 'fcaptcha':
-                    print(r.json())
                     taskid = r.json()['task']['task_id']
                 else:
                     if r.json().get("task_id"):

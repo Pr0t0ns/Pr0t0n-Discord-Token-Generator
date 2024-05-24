@@ -1,8 +1,8 @@
 import platform, sys, os, shutil, random
 import colorama
 class UI:
-    colorama.init(autoreset=True)
-    def clear(title: str=None):
+
+    def clear(title: str=None): # Taken from Keyauth to clear UI
         if platform.system() == 'Windows':
             os.system(f'cls {title if title != None else ""}')  # clear console, change title
         elif platform.system() == 'Linux':
@@ -15,6 +15,7 @@ class UI:
                 os.system(f'''echo - n - e "\033]0;{title}\007"''')  # change title
     
     def show():
+            colorama.init(autoreset=True)
             logo_text = """
             ██████╗ ██████╗  ██████╗ ████████╗ ██████╗ ███╗   ██╗     ██████╗ ███████╗███╗   ██╗
             ██╔══██╗██╔══██╗██╔═████╗╚══██╔══╝██╔═████╗████╗  ██║    ██╔════╝ ██╔════╝████╗  ██║
