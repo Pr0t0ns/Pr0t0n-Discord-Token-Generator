@@ -16,7 +16,7 @@ As promised I have posted my discord token generator which I plan to update alot
 
 https://t.me/+Tvbz-xGh_5pjYzVh (Telegram Channel)
 https://discord.gg/fcaptcha (Not my server but very active here)
-@Pr0t0nlol (Telegram)
+@Pr0t0nW (Telegram)
 @poft (Discord)
 
 
