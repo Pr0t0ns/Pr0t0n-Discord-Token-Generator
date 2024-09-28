@@ -14,10 +14,11 @@ As promised I have posted my discord token generator which I plan to update alot
 
 📘 Contact 📘
 
-https://t.me/+Tvbz-xGh_5pjYzVh (Telegram Channel)
-https://discord.gg/fcaptcha (Not my server but very active here)
-@Pr0t0ngoat (Telegram)
-@poft (Discord)
+Telegram Channel
+https://t.me/+Tvbz-xGh_5pjYzVh
+
+Telegram
+@Pr0t0ngoated (https://t.me/pr0t0ngoated)
 
 
 ## PLEASE LIKE AND STAR THIS REPO SO I AM MOTIVATED TO CONTINUE MAINTAINING IT ##
