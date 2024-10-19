@@ -18,7 +18,7 @@ Telegram Channel
 https://t.me/+Tvbz-xGh_5pjYzVh
 
 Telegram
-@cornflakes (https://t.me/cornflakes)
+@pr0t0ngo (https://t.me/pr0t0ngo)
 
 
 ## PLEASE LIKE AND STAR THIS REPO SO I AM MOTIVATED TO CONTINUE MAINTAINING IT ##
