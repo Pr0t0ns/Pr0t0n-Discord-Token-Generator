@@ -18,7 +18,7 @@ Telegram Channel
 https://t.me/+Tvbz-xGh_5pjYzVh
 
 Telegram
-@pr0t0ngo (https://t.me/pr0t0ngo)
+@pr0t0nwave (https://t.me/pr0t0nwave)
 
 
 ## PLEASE LIKE AND STAR THIS REPO SO I AM MOTIVATED TO CONTINUE MAINTAINING IT ##
